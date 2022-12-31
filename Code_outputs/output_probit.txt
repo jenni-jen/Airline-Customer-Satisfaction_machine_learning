@@ -1,0 +1,106 @@
+# fit probit model
+
+Call:
+glm(formula = satisfaction ~ ., family = binomial(link = "probit"), 
+    data = airline_train)
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-3.6805  -0.3850   0.0863   0.4334   4.4096  
+
+Coefficients:
+                         Estimate Std. Error  z value Pr(>|z|)    
+(Intercept)            -5.691e+00  5.111e-02 -111.363  < 2e-16 ***
+genderMale             -5.311e-01  1.199e-02  -44.285  < 2e-16 ***
+customer_typeloyal      1.388e+00  1.918e-02   72.357  < 2e-16 ***
+age                    -1.715e-03  4.173e-04   -4.109 3.97e-05 ***
+travel_typepersonal    -5.848e-01  1.717e-02  -34.058  < 2e-16 ***
+classEco               -4.094e-01  1.585e-02  -25.835  < 2e-16 ***
+classEco Plus          -4.983e-01  2.387e-02  -20.880  < 2e-16 ***
+flight_distance        -4.936e-05  6.154e-06   -8.020 1.06e-15 ***
+seat_comfort            3.230e-01  6.914e-03   46.714  < 2e-16 ***
+flight_time_convenient -2.360e-01  6.479e-03  -36.429  < 2e-16 ***
+food_drink              1.100e-01  7.433e-03   14.803  < 2e-16 ***
+gate_location          -3.338e-02  6.368e-03   -5.242 1.59e-07 ***
+inflight_wifi          -4.464e-02  6.269e-03   -7.122 1.07e-12 ***
+inflight_entertainment  5.027e-01  6.414e-03   78.370  < 2e-16 ***
+online_support          5.083e-02  6.676e-03    7.613 2.67e-14 ***
+online_booking_ease     1.598e-01  8.561e-03   18.669  < 2e-16 ***
+onboard_service         2.085e-01  6.199e-03   33.641  < 2e-16 ***
+leg_room_service        1.627e-01  5.343e-03   30.446  < 2e-16 ***
+baggage_handling        7.296e-02  7.004e-03   10.416  < 2e-16 ***
+checkin_service         1.859e-01  5.079e-03   36.600  < 2e-16 ***
+cleanliness             5.290e-02  7.281e-03    7.266 3.71e-13 ***
+online_boarding         1.044e-01  7.022e-03   14.862  < 2e-16 ***
+departure_delay         1.449e-03  5.790e-04    2.503   0.0123 *  
+arrival_delay          -3.986e-03  5.689e-04   -7.006 2.46e-12 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 131585  on 95392  degrees of freedom
+Residual deviance:  59041  on 95369  degrees of freedom
+  (因为不存在，296个观察量被删除了)
+AIC: 59089
+
+Number of Fisher Scoring iterations: 6
+
+-----------------------------------------------------------
+
+# goodness of fit: likelihood ratio test
+
+  #Df LogLik  Df Chisq Pr(>Chisq)    
+1  24 -29520                         
+2   1 -65793 -23 72544  < 2.2e-16 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+-----------------------------------------------------------
+
+# goodness of fit: pseudo R2
+
+fitting null model for pseudo-r2
+          llh       llhNull            G2      McFadden          r2ML          r2CU 
+-2.952047e+04 -6.579265e+04  7.254436e+04  5.513106e-01  5.325575e-01  7.117174e-01 
+
+-----------------------------------------------------------
+
+# goodness of fit: Hosmer-Lemeshow test
+
+	Hosmer and Lemeshow goodness of fit (GOF) test
+
+data:  probit_train_obs, probit_train_pred
+X-squared = 61.608, df = 8, p-value = 2.252e-10
+
+-----------------------------------------------------------
+
+# performance on the test set
+
+Confusion Matrix and Statistics
+
+          Reference
+Prediction     0     1
+         0  9163  1484
+         1  1784 11431
+                                          
+               Accuracy : 0.863           
+                 95% CI : (0.8586, 0.8674)
+    No Information Rate : 0.5412          
+    P-Value [Acc > NIR] : < 2.2e-16       
+                                          
+                  Kappa : 0.7236          
+                                          
+ Mcnemar's Test P-Value : 1.692e-07       
+                                          
+            Sensitivity : 0.8851          
+            Specificity : 0.8370          
+         Pos Pred Value : 0.8650          
+         Neg Pred Value : 0.8606          
+             Prevalence : 0.5412          
+         Detection Rate : 0.4790          
+   Detection Prevalence : 0.5538          
+      Balanced Accuracy : 0.8611          
+                                          
+       'Positive' Class : 1               
+

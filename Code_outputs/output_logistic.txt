@@ -1,0 +1,205 @@
+# fit full model
+
+Call:
+glm(formula = satisfaction ~ ., family = "binomial", data = airline_train)
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-3.3171  -0.3686   0.1298   0.4202   3.7336  
+
+Coefficients:
+                         Estimate Std. Error  z value Pr(>|z|)    
+(Intercept)            -1.014e+01  9.636e-02 -105.275  < 2e-16 ***
+genderMale             -9.588e-01  2.174e-02  -44.096  < 2e-16 ***
+customer_typeloyal      2.465e+00  3.513e-02   70.180  < 2e-16 ***
+age                    -3.197e-03  7.511e-04   -4.256 2.08e-05 ***
+travel_typepersonal    -1.022e+00  3.093e-02  -33.033  < 2e-16 ***
+classEco               -7.592e-01  2.848e-02  -26.658  < 2e-16 ***
+classEco Plus          -9.249e-01  4.285e-02  -21.584  < 2e-16 ***
+flight_distance        -8.989e-05  1.115e-05   -8.062 7.48e-16 ***
+seat_comfort            5.998e-01  1.273e-02   47.112  < 2e-16 ***
+flight_time_convenient -4.299e-01  1.171e-02  -36.715  < 2e-16 ***
+food_drink              1.846e-01  1.349e-02   13.684  < 2e-16 ***
+gate_location          -6.204e-02  1.145e-02   -5.420 5.94e-08 ***
+inflight_wifi          -8.837e-02  1.135e-02   -7.788 6.79e-15 ***
+inflight_entertainment  8.943e-01  1.174e-02   76.199  < 2e-16 ***
+online_support          9.033e-02  1.196e-02    7.553 4.26e-14 ***
+online_booking_ease     2.861e-01  1.533e-02   18.659  < 2e-16 ***
+onboard_service         3.757e-01  1.118e-02   33.601  < 2e-16 ***
+leg_room_service        2.879e-01  9.610e-03   29.965  < 2e-16 ***
+baggage_handling        1.318e-01  1.256e-02   10.497  < 2e-16 ***
+checkin_service         3.327e-01  9.172e-03   36.270  < 2e-16 ***
+cleanliness             9.736e-02  1.307e-02    7.451 9.23e-14 ***
+online_boarding         1.903e-01  1.258e-02   15.118  < 2e-16 ***
+departure_delay         2.492e-03  1.044e-03    2.386    0.017 *  
+arrival_delay          -7.322e-03  1.025e-03   -7.141 9.25e-13 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 131585  on 95392  degrees of freedom
+Residual deviance:  58938  on 95369  degrees of freedom
+  (因为不存在，296个观察量被删除了)
+AIC: 58986
+
+Number of Fisher Scoring iterations: 6
+
+-----------------------------------------------------------
+
+# fit baseline model
+
+Call:
+glm(formula = satisfaction ~ 1, family = "binomial", data = airline_train)
+
+Deviance Residuals: 
+   Min      1Q  Median      3Q     Max  
+-1.249  -1.249   1.108   1.108   1.108  
+
+Coefficients:
+            Estimate Std. Error z value Pr(>|z|)    
+(Intercept) 0.165937   0.006488   25.58   <2e-16 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 131997  on 95688  degrees of freedom
+Residual deviance: 131997  on 95688  degrees of freedom
+AIC: 131999
+
+Number of Fisher Scoring iterations: 3
+
+-----------------------------------------------------------
+
+# model selection, direction = 'both'
+
+Step:  AIC=42347.69
+satisfaction ~ gender + customer_type + age + travel_type + class + 
+    flight_distance + seat_comfort + flight_time_convenient + 
+    food_drink + gate_location + inflight_wifi + inflight_entertainment + 
+    online_support + online_booking_ease + onboard_service + 
+    leg_room_service + baggage_handling + checkin_service + cleanliness + 
+    online_boarding + departure_delay + arrival_delay + seat_comfort:flight_time_convenient + 
+    gender:travel_type + travel_type:flight_time_convenient + 
+    customer_type:seat_comfort + food_drink:online_booking_ease + 
+    seat_comfort:gate_location + class:seat_comfort + travel_type:checkin_service + 
+    gender:seat_comfort + class:leg_room_service + class:online_boarding
+
+-----------------------------------------------------------
+
+# final model, consider interactions
+
+Call:
+glm(formula = satisfaction ~ . + seat_comfort:flight_time_convenient + 
+    class:seat_comfort, family = "binomial", data = airline_train)
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-3.3854  -0.3184   0.0911   0.3679   3.8973  
+
+Coefficients:
+                                      Estimate Std. Error z value Pr(>|z|)    
+(Intercept)                         -5.434e+00  1.139e-01 -47.721  < 2e-16 ***
+genderMale                          -8.490e-01  2.287e-02 -37.130  < 2e-16 ***
+customer_typeloyal                   2.525e+00  3.633e-02  69.517  < 2e-16 ***
+age                                 -3.047e-03  7.962e-04  -3.827  0.00013 ***
+travel_typepersonal                 -1.028e+00  3.232e-02 -31.804  < 2e-16 ***
+classEco                            -1.376e+00  7.903e-02 -17.406  < 2e-16 ***
+classEco Plus                       -1.690e+00  1.488e-01 -11.357  < 2e-16 ***
+flight_distance                     -1.053e-04  1.178e-05  -8.945  < 2e-16 ***
+seat_comfort                        -9.361e-01  2.637e-02 -35.503  < 2e-16 ***
+flight_time_convenient              -2.153e+00  2.991e-02 -71.979  < 2e-16 ***
+food_drink                           1.338e-01  1.438e-02   9.305  < 2e-16 ***
+gate_location                       -5.673e-03  1.218e-02  -0.466  0.64140    
+inflight_wifi                       -9.366e-02  1.193e-02  -7.848 4.23e-15 ***
+inflight_entertainment               8.356e-01  1.238e-02  67.472  < 2e-16 ***
+online_support                       9.029e-02  1.266e-02   7.132 9.89e-13 ***
+online_booking_ease                  3.164e-01  1.615e-02  19.584  < 2e-16 ***
+onboard_service                      3.570e-01  1.165e-02  30.647  < 2e-16 ***
+leg_room_service                     2.756e-01  1.010e-02  27.278  < 2e-16 ***
+baggage_handling                     1.259e-01  1.322e-02   9.524  < 2e-16 ***
+checkin_service                      3.195e-01  9.574e-03  33.371  < 2e-16 ***
+cleanliness                          7.968e-02  1.367e-02   5.831 5.51e-09 ***
+online_boarding                      1.769e-01  1.320e-02  13.406  < 2e-16 ***
+departure_delay                      2.342e-03  1.095e-03   2.139  0.03246 *  
+arrival_delay                       -6.658e-03  1.076e-03  -6.187 6.12e-10 ***
+seat_comfort:flight_time_convenient  5.339e-01  8.061e-03  66.235  < 2e-16 ***
+classEco:seat_comfort                2.561e-01  2.285e-02  11.208  < 2e-16 ***
+classEco Plus:seat_comfort           3.027e-01  4.238e-02   7.143 9.12e-13 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 131585  on 95392  degrees of freedom
+Residual deviance:  53388  on 95366  degrees of freedom
+  (因为不存在，296个观察量被删除了)
+AIC: 53442
+
+Number of Fisher Scoring iterations: 6
+
+-----------------------------------------------------------
+
+# goodness of fit: likelihood ratio test (fit_final v.s. fit_full)
+
+  #Df LogLik Df Chisq Pr(>Chisq)    
+1  27 -26694                        
+2  24 -29469 -3  5550  < 2.2e-16 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+-----------------------------------------------------------
+
+# goodness of fit: pseudo R2
+
+## fit_full
+fitting null model for pseudo-r2
+          llh       llhNull            G2      McFadden          r2ML          r2CU 
+-2.946902e+04 -6.579265e+04  7.264725e+04  5.520925e-01  5.330614e-01  7.123909e-01 
+
+## fit_final
+fitting null model for pseudo-r2
+          llh       llhNull            G2      McFadden          r2ML          r2CU 
+-2.669403e+04 -6.579265e+04  7.819723e+04  5.942702e-01  5.594527e-01  7.476606e-01 
+
+-----------------------------------------------------------
+
+# goodness of fit: Hosmer-Lemeshow test
+
+	Hosmer and Lemeshow goodness of fit (GOF) test
+
+data:  train_obs, train_pred
+X-squared = 34.397, df = 8, p-value = 3.442e-05
+
+-----------------------------------------------------------
+
+# performance on the test set
+
+Confusion Matrix and Statistics
+
+          Reference
+Prediction     0     1
+         0  9414  1386
+         1  1533 11529
+                                          
+               Accuracy : 0.8777          
+                 95% CI : (0.8734, 0.8818)
+    No Information Rate : 0.5412          
+    P-Value [Acc > NIR] : < 2.2e-16       
+                                          
+                  Kappa : 0.7534          
+                                          
+ Mcnemar's Test P-Value : 0.006886        
+                                          
+            Sensitivity : 0.8927          
+            Specificity : 0.8600          
+         Pos Pred Value : 0.8826          
+         Neg Pred Value : 0.8717          
+             Prevalence : 0.5412          
+         Detection Rate : 0.4832          
+   Detection Prevalence : 0.5474          
+      Balanced Accuracy : 0.8763          
+                                          
+       'Positive' Class : 1               
+
